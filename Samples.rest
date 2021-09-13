@@ -1,0 +1,12 @@
+@url = http://localhost:5000
+@agendasApi = {{url}}/TaskManager
+###
+# @name register_task
+POST  {{agendasApi}}/?m=60
+Content-Type: text/plain
+###
+@tokenId = {{register_task.response.body.$.jobId}}
+###
+GET {{agendasApi}}?taskId={{tokenId}}
+accept: text/plain
+
