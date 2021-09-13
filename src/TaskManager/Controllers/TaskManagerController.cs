@@ -16,6 +16,10 @@ namespace TaskManager.Controllers
         private readonly ITaskManager _taskManager;
         private readonly ITaskJob _taskJob;
 
+        private static readonly string[] Summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
         public TaskManagerController(ILogger<WeatherForecastController> logger, ITaskJob taskJob, ITaskManager taskManager)
         {
             _logger = logger;
@@ -24,20 +28,22 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet]
-        public int GetProgress(Guid taskId)
+        public ActionResult<object> GetProgress(string taskId)
         {
-            var progress = _taskManager.GetTaskJob(taskId).GetProgress();
+            var task = _taskManager.GetTaskJob(Guid.Parse(taskId));
+            var progress = task.GetProgress();
 
-            return progress;
+            return Ok(new { progress = progress, taskId = taskId});
         }
         [HttpPost]
-        public string DoJob(int m)
+        public ActionResult DoJob(int m)
         {
             var jobId = Guid.NewGuid();
             _taskManager.CreateTask(jobId);
             var task = _taskManager.GetTaskJob(jobId);
             task.DoTheJob(m);
-            return jobId.ToString();
+            // return Created(GetProgress(jobId.ToString());
+            return  CreatedAtAction(nameof(GetProgress), new { jobId = jobId } );
         }
     }
 }

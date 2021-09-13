@@ -12,11 +12,9 @@ namespace TaskManager.Services
         private int _progress = 0;
         private static readonly object myLock = new object();
         private static CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        private readonly int _repeatParameter; //ToDo: Use polly
 
         public TaskJob()
         {
-            _repeatParameter = 3;
             //inject some service to do sth, fast version with new Service() not injected;
         }
         public void DoTheJob(int m)
