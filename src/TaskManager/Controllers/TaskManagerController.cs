@@ -12,15 +12,11 @@ namespace TaskManager.Controllers
     [Route("[controller]")]
     public class TaskManagerController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<TaskManagerController> _logger;
         private readonly ITaskManager _taskManager;
         private readonly ITaskJob _taskJob;
 
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-        public TaskManagerController(ILogger<WeatherForecastController> logger, ITaskJob taskJob, ITaskManager taskManager)
+        public TaskManagerController(ILogger<TaskManagerController> logger, ITaskJob taskJob, ITaskManager taskManager)
         {
             _logger = logger;
             _taskManager = taskManager;
